@@ -1,0 +1,46 @@
+/* Basic styling for the form and table */
+body {
+    font-family: Arial, sans-serif;
+    width:90%;
+    margin:auto;
+    margin-top:20px;
+}
+nav{
+    width:auto;
+    position: fixed;
+    left:.001%;
+    padding-left:10px;
+}
+.icons{
+    max-width: 35px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+    hyphens: auto;
+    max-width: 100px;
+    word-wrap:break-word;
+}
+
+form {
+    margin-top: 20px;
+}
+
+form input {
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+form button:hover {
+    background-color: #45a049;
+}

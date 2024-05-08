@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table with Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <a href="index.html"><img src="pics/home.png" class="icons"></a></br>
+        <a href="#" onclick="clearStorage()"><img src="pics/delete.png" class="icons"></a>
+    </nav>
+    <h2>Saved Data Summary</h2> 
+    <table id="summary-table">
+        <tr>
+            <th>Title</th>
+            <th>Actions</th> 
+        </tr>
+        <!-- Table rows will be dynamically added here -->
+    </table>
+
+    <center><button type="button" onclick="window.location.href='./pages/edit.html'">Create New Day</button></center>
+
+    <script src="summary.js"></script>
+    <script>
+        function clearStorage() {
+            // Prompt the user for confirmation
+            const confirmClear = confirm("This will clear all saved data. Are you sure?");
+            
+            // If user confirms, clear the local storage
+            if (confirmClear) {
+                localStorage.clear();
+                alert("All saved data has been cleared.");
+                // Force page refresh
+                location.reload();
+            }
+        }
+    </script>    
+</body>
+</html>
