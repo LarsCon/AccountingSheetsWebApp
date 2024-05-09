@@ -1,13 +1,16 @@
 document.addEventListener("DOMContentLoaded", function() {
     const summaryTable = document.getElementById("summary-table");
-
+    
     // Retrieve saved data from local storage
     let savedData = localStorage.getItem("savedData");
     if (savedData) {
         let parsedData = JSON.parse(savedData);
-
-        // Log all saved objects
-        console.log("Saved Data:", parsedData);
+        // Log all items in localStorage
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            const value = localStorage.getItem(key);
+            console.log(`Key: ${key}, Value: ${value}`);
+        }
 
         // Function to delete a row and its associated object
         function deleteRowAndObject(index) {
@@ -22,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function() {
         function handleViewButtonClick(index) {
             const sheet = parsedData.sheets[index];
             localStorage.setItem("currentSheet", JSON.stringify(sheet)); // Store the current sheet in local storage
-            localStorage.setItem("parsedData", JSON.stringify(parsedData)); // Pass parsedData to display.js
             window.location.href = "pages/display.html"; // Redirect to display.html
         }
 
@@ -33,6 +35,23 @@ document.addEventListener("DOMContentLoaded", function() {
             window.location.href = "pages/editold.html"; // Redirect to edit.html
         }
 
+        // Function to update the originally selected sheet in savedData
+        function updateSavedDataWithSheet(sheet) {
+            // Retrieve saved data from local storage
+            let savedData = JSON.parse(localStorage.getItem("savedData")) || {}; // Initialize as empty object
+            savedData.sheets = savedData.sheets || []; // Initialize sheets array if not present
+
+            // Find the index of the originally selected sheet in savedData
+            const index = savedData.sheets.findIndex(savedSheet => savedSheet.title === sheet.title);
+
+            if (index !== -1) {
+                // Replace the existing entry with the new data
+                savedData.sheets[index] = sheet;
+
+                // Update savedData in local storage
+                localStorage.setItem("savedData", JSON.stringify(savedData));
+            }
+        }
 
         // Iterate over each saved object and create a row in the table
         parsedData.sheets.forEach((sheet, index) => {

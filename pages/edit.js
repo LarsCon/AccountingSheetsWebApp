@@ -291,31 +291,44 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     
     const saveButton = document.getElementById("save-button");
-    saveButton.addEventListener("click", function() {
-        // Show confirmation prompt
-        const confirmSave = confirm("Are you sure you're done?");
+// Event listener for the "Save Data" button
+saveButton.addEventListener("click", function() {
+    // Check if there are at least two rows in the main table
+    const mainRowCount = mainTableBody.querySelectorAll("tr").length;
+    const mainSaveButtons = mainTableBody.querySelectorAll(".edit-btn");
+    const additionalSaveButtons = additionalTableBody.querySelectorAll(".edit-btn");
+
+    const anyUnsavedChanges = Array.from(mainSaveButtons).some(button => button.textContent === "Save") ||
+                              Array.from(additionalSaveButtons).some(button => button.textContent === "Save");
+
+    if (anyUnsavedChanges || (mainRowCount < 1)) {
+        // Alert the user to finish all unsaved changes and/or populate all required entries
+        alert("Please change all unsaved changes and/or have atleast 1 row in main table.");
+        return;
+    }
+    else {
+    // If there are no unsaved changes and main table has at least two rows, proceed with the saving process
+
+    // Serialize the tables
+    const serializedData = serializeTables();
+    console.log(serializedData);
+
+    // Retrieve saved data from local storage
+    const savedData = localStorage.getItem("savedData");
+    let parsedData = savedData ? JSON.parse(savedData) : {}; // Initialize as empty object
+    parsedData.sheets = parsedData.sheets || []; // Initialize sheets array if not present
+
+    // Push the serialized data to the array of saved data
+    parsedData.sheets.push(serializedData);
+
+    // Save the updated object to local storage
+    localStorage.setItem("savedData", JSON.stringify(parsedData));
+
+    // Redirect to display.html to view the newly created entry
+    localStorage.setItem("currentSheet", JSON.stringify(serializedData));
+    window.location.href = "display.html";
+}});
     
-        if (confirmSave) {
-            // Serialize the tables
-            const serializedData = serializeTables();
-            console.log(serializedData);
-    
-            // Retrieve saved data from local storage
-            const savedData = localStorage.getItem("savedData");
-            let parsedData = savedData ? JSON.parse(savedData) : {}; // Initialize as empty object
-            parsedData.sheets = parsedData.sheets || []; // Initialize sheets array if not present
-    
-            // Push the serialized data to the array of saved data
-            parsedData.sheets.push(serializedData);
-    
-            // Save the updated object to local storage
-            localStorage.setItem("savedData", JSON.stringify(parsedData));
-    
-            // Redirect to display.html to view the newly created entry
-            localStorage.setItem("currentSheet", JSON.stringify(serializedData));
-            window.location.href = "display.html";
-        }
-    });    
    
 
     // Initialize tables if data is present in local storage
