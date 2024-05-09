@@ -3,3 +3,11 @@
 
 ## Currently Broken
   Row editing old sheets
+
+## Goals
+  Multiple Day Functionality
+  Inventory Log
+  Style
+
+## Stretch
+  Change buttons to icons
