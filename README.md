@@ -6,7 +6,9 @@
 
 ## Goals
   Multiple Day Functionality
+  
   Inventory Log
+  
   Style
 
 ## Stretch
