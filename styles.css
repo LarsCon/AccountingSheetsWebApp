@@ -71,7 +71,7 @@ footer{
     text-align: right;
 }
 
-@media screen and (max-width: 950px) {
+@media screen and (max-width: 1100px) {
     body {
         width:85%;
       margin-left: 55px;

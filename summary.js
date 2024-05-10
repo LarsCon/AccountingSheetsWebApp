@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // Create view icon
             const viewIcon = document.createElement("img");
             viewIcon.src = "pics/view.png"; // Path to view.png in the "pics" folder
-            viewIcon.alt = "View";
+            viewIcon.title = "View";
             viewIcon.classList.add("summaryIcon");
             viewIcon.addEventListener("click", function() {
                 handleViewButtonClick(index);
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function() {
             // Create edit icon
             const editIcon = document.createElement("img");
             editIcon.src = "pics/edit.png"; // Path to edit.png in the "pics" folder
-            editIcon.alt = "Edit";
+            editIcon.title = "Edit";
             editIcon.classList.add("summaryIcon");
             editIcon.addEventListener("click", function() {
                 handleEditButtonClick(index);
@@ -70,10 +70,10 @@ document.addEventListener("DOMContentLoaded", function() {
             // Create delete icon
             const deleteIcon = document.createElement("img");
             deleteIcon.src = "pics/delete.png"; // Path to delete.png in the "pics" folder
-            deleteIcon.alt = "Delete";
+            deleteIcon.title = "Delete";
             deleteIcon.classList.add("summaryIcon");
             deleteIcon.addEventListener("click", function() {
-                const confirmDelete = confirm("Are you sure you want to delete this entry?");
+                const confirmDelete = confirm("Are you sure you want to delete this sheet?");
                 if (confirmDelete) {
                     deleteRowAndObject(index);
                 }

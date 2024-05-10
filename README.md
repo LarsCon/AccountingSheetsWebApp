@@ -15,3 +15,5 @@
   Change buttons to icons
 
   Edit/Editold have single edit button for maintable
+
+  Edit/Delete on edit/editold hide on smaller screens
