@@ -144,24 +144,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 
-    // Function to create a row in the additional table
-    function createAdditionalTableRow(data) {
-        const newRow = document.createElement("tr");
-        
-        // Loop through the data to create table cells
-        data.forEach(value => {
-            const cell = document.createElement("td");
-            cell.textContent = value;
-            newRow.appendChild(cell);
-        });
-
-        // Append the new row to the additional table
-        additionalTableBody.appendChild(newRow);
-
-        // Update the grand balance display
-        updateGrandBalanceDisplay(calculateSumOfDeltas());
-    }
-
     // Event listener for form submission
     form.addEventListener("submit", function(event) {
         event.preventDefault();
@@ -256,7 +238,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function serializeTables() {
         const now = new Date();
-        const title = now.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true });
+        const dayAbbreviation = now.toLocaleString('en-US', { weekday: 'short' }).substring(0, 3);
+        const title = `${dayAbbreviation} ${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear().toString().slice(-2)}, ${now.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })}`;
+
         const serializedData = {
             title: title,
             mainTable: [],
@@ -303,7 +287,7 @@ saveButton.addEventListener("click", function() {
 
     if (anyUnsavedChanges || (mainRowCount < 1)) {
         // Alert the user to finish all unsaved changes and/or populate all required entries
-        alert("Please change all unsaved changes and/or have atleast 1 row in main table.");
+        alert("Save all unsaved changes and/or have atleast 1 row in main table.");
         return;
     }
     else {
@@ -328,15 +312,4 @@ saveButton.addEventListener("click", function() {
     localStorage.setItem("currentSheet", JSON.stringify(serializedData));
     window.location.href = "display.html";
 }});
-    
-   
-
-    // Initialize tables if data is present in local storage
-    const savedData = localStorage.getItem("savedData");
-    if (savedData) {
-        const parsedData = JSON.parse(savedData);
-        // Populate tables with parsedData
-        // (You'll need to write a function to populate tables with the parsed data)
-    }
-
 });

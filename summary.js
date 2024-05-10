@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // Remove the corresponding row from the table
             summaryTable.deleteRow(index + 1); // Add 1 to account for the header row
+            location.reload();
         }
 
         // Function to handle the "View" button click event
@@ -35,26 +36,9 @@ document.addEventListener("DOMContentLoaded", function() {
             window.location.href = "pages/editold.html"; // Redirect to edit.html
         }
 
-        // Function to update the originally selected sheet in savedData
-        function updateSavedDataWithSheet(sheet) {
-            // Retrieve saved data from local storage
-            let savedData = JSON.parse(localStorage.getItem("savedData")) || {}; // Initialize as empty object
-            savedData.sheets = savedData.sheets || []; // Initialize sheets array if not present
-
-            // Find the index of the originally selected sheet in savedData
-            const index = savedData.sheets.findIndex(savedSheet => savedSheet.title === sheet.title);
-
-            if (index !== -1) {
-                // Replace the existing entry with the new data
-                savedData.sheets[index] = sheet;
-
-                // Update savedData in local storage
-                localStorage.setItem("savedData", JSON.stringify(savedData));
-            }
-        }
-
-        // Iterate over each saved object and create a row in the table
-        parsedData.sheets.forEach((sheet, index) => {
+        // Iterate over each saved object and create a row in the table in reverse order
+        for (let index = parsedData.sheets.length - 1; index >= 0; index--) {
+            const sheet = parsedData.sheets[index];
             const title = sheet.title;
             const newRow = summaryTable.insertRow();
             
@@ -95,6 +79,6 @@ document.addEventListener("DOMContentLoaded", function() {
             actionsCell.appendChild(viewButton);
             actionsCell.appendChild(editButton);
             actionsCell.appendChild(deleteButton);
-        });
+        }
     }
 });

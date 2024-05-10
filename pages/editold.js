@@ -106,52 +106,52 @@ document.addEventListener("DOMContentLoaded", function() {
         updateSumDisplay();
     }
 
-    // Function to handle the edit button click event
-    function handleEditButtonClick(event) {
-        const row = event.target.parentElement.parentElement;
-        const cells = row.querySelectorAll("td");
+    // Function to handle the "Edit" button click event
+function handleEditButtonClick(event) {
+    const row = event.target.parentElement.parentElement;
+    const cells = row.querySelectorAll("td");
 
-        if (event.target.textContent === "Edit") {
-            // Replace text content with input fields for editing
-            cells.forEach((cell, index) => {
-                if (index < cells.length - 1) { // Excluding the last cell (buttons)
-                    const input = document.createElement("input");
-                    input.type = "text";
-                    input.value = cell.textContent;
-                    cell.textContent = "";
-                    cell.appendChild(input);
-                }
-            });
-
-            event.target.textContent = "Save";
-        } else {
-            // Update cell values with input field values
-            let isValid = true;
-            cells.forEach((cell, index) => {
-                if (index < cells.length - 1) { // Excluding the last cell (buttons)
-                    const inputValue = cell.querySelector("input").value.trim();
-                    cell.textContent = inputValue || ""; // Set empty string if inputValue is null
-                    if (![0, 1, 4, 6].includes(index)) { // Check if not in required columns
-                        return;
-                    }
-                    if (!inputValue) {
-                        isValid = false;
-                        return;
-                    }
-                }
-            });
-
-            if (isValid) {
-                event.target.textContent = "Edit";
-            } else {
-                event.target.textContent = "Save";
-                event.target.disabled = true;
+    if (event.target.textContent === "Edit") {
+        // Replace text content with input fields for editing
+        cells.forEach((cell, index) => {
+            if (index < cells.length - 1) { // Excluding the last cell (buttons)
+                const input = document.createElement("input");
+                input.type = "text";
+                input.value = cell.textContent;
+                cell.textContent = "";
+                cell.appendChild(input);
             }
+        });
 
-            // Update the sum display
-            updateSumDisplay();
+        event.target.textContent = "Save";
+    } else {
+        // Update cell values with input field values
+        let isValid = true;
+        cells.forEach((cell, index) => {
+            if (index < cells.length - 1) { // Excluding the last cell (buttons)
+                const inputValue = cell.querySelector("input").value.trim();
+                cell.textContent = inputValue || ""; // Set empty string if inputValue is null
+                if (![0, 1, 4, 6].includes(index)) { // Check if not in required columns
+                    return;
+                }
+                if (!inputValue) {
+                    isValid = false;
+                    return;
+                }
+            }
+        });
+
+        if (isValid) {
+            event.target.textContent = "Edit";
+        } else {
+            event.target.textContent = "Save";
+            event.target.disabled = true;
         }
+
+        // Update the sum display
+        updateSumDisplay();
     }
+}
 
     // Function to handle the delete button click event
     function handleDeleteButtonClick(event) {
@@ -269,8 +269,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Function to serialize tables data
     function serializeTables() {
-        const now = new Date();
-        const title = now.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true });
+        let currentSheetForEdit = localStorage.getItem("currentSheetForEdit");
+        let sheetData = JSON.parse(currentSheetForEdit);
+        const title = sheetData.title;
         const serializedData = {
             title: title,
             mainTable: [],
@@ -311,13 +312,13 @@ saveButton.addEventListener("click", function() {
     // Check if any button in the main table or additional table has the text "Save"
     const mainSaveButtons = mainTableBody.querySelectorAll(".edit-btn");
     const additionalSaveButtons = additionalTableBody.querySelectorAll(".edit-btn");
-
+    const mainRowCount = mainTableBody.querySelectorAll("tr").length;
     const anyUnsavedChanges = Array.from(mainSaveButtons).some(button => button.textContent === "Save") ||
                               Array.from(additionalSaveButtons).some(button => button.textContent === "Save");
 
-    if (anyUnsavedChanges) {
+    if (anyUnsavedChanges || (mainRowCount < 1)) {
         // Prompt the user to finish all unsaved changes
-        alert("Finish all unsaved changes.");
+        alert("Save all unsaved changes and/or have atleast 1 row in main table.");
         return;
     }
     else {
@@ -326,9 +327,6 @@ saveButton.addEventListener("click", function() {
     const serializedData = serializeTables();
     console.log(serializedData);
 
-    // Redirect to display.html to view the newly updated entry
-    localStorage.setItem("currentSheet", JSON.stringify(serializedData));
-
     // Retrieve saved data from local storage
     let savedData = JSON.parse(localStorage.getItem("savedData")) || {}; // Initialize as empty object
     savedData.sheets = savedData.sheets || []; // Initialize sheets array if not present
@@ -336,23 +334,18 @@ saveButton.addEventListener("click", function() {
     // Find the index of the originally selected sheet in savedData
     const index = savedData.sheets.findIndex(savedSheet => savedSheet.title === serializedData.title);
 
+
     if (index !== -1) {
         // Replace the existing entry with the new data
         savedData.sheets[index] = serializedData;
-
+        if (!savedData.sheets[index].title.includes("[E]")) {
+            savedData.sheets[index].title = serializedData.title + " [E]";
+        }
         // Update savedData in local storage
         localStorage.setItem("savedData", JSON.stringify(savedData));
     }
-
+    // Redirect to display.html to view the newly updated entry
+    localStorage.setItem("currentSheet", JSON.stringify(serializedData));
     window.location.href = "display.html";
 }});
-
-
-    // Initialize tables if data is present in local storage
-    const savedData = localStorage.getItem("savedData");
-    if (savedData) {
-        const parsedData = JSON.parse(savedData);
-        // Populate tables with parsedData
-        // (You'll need to write a function to populate tables with the parsed data)
-    }
 });
