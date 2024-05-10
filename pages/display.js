@@ -3,7 +3,11 @@ document.addEventListener("DOMContentLoaded", function() {
     const currentSheet = localStorage.getItem("currentSheet"); // Get the clicked entry's data
     if (currentSheet) {
         const parsedSheet = JSON.parse(currentSheet);
-        
+
+        // Set the title of the main table dynamically
+        const mainTableTitle = document.getElementById("main-table-title");
+        mainTableTitle.textContent = parsedSheet.title || "Main Table";
+
         // Function to populate main table with the clicked entry's data
         function populateMainTable(parsedSheet) {
             const mainTableBody = document.querySelector("#main-table tbody");

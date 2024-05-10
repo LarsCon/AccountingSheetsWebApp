@@ -8,11 +8,11 @@
 </head>
 <body>
     <nav>
-        <a href="../index.html"><img src="../pics/home.png" class="icons"></a></br>
-        <a href="#" onclick="printDocument()"><img src="../pics/print.png" class="icons"></a>
+        <a href="../index.html"><img src="../pics/home.png" class="icons" title="Home"></a></br>
+        <a href="#" onclick="printDocument()"><img src="../pics/print.png" class="icons" title="Print"></a>
     </nav>
     <div>
-        <h2>Main Table</h2>
+        <h2 id="main-table-title"></h2>
         <table id="main-table">
             <thead>
                 <tr>
@@ -32,7 +32,7 @@
     </div>
  
     <div>
-        <h2>Additional Table</h2>
+        <h2>Cash Drawer Balance</h2>
         <table id="additional-table">
             <thead>
                 <tr>
@@ -47,11 +47,13 @@
     </div>
 
     <div>
-        <h2>Summary</h2>
-        <p>Total Instant Sales: <span id="total-sales"></span></p>
-        <p>Grand Balance: <span id="grand-balance"></span></p>
+        <h2>Totals</h2>
+        <p>Total Instant Sales: <b><span id="total-sales"></span></b></p>
+        <p>Grand Balance: <b><span id="grand-balance"></span></b></p>
     </div>
-
+    <footer>
+        Ver 1.0
+    </footer>
     <script src="display.js"></script>
     <script>
         function printDocument() {

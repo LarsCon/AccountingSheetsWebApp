@@ -41,44 +41,48 @@ document.addEventListener("DOMContentLoaded", function() {
             const sheet = parsedData.sheets[index];
             const title = sheet.title;
             const newRow = summaryTable.insertRow();
-            
+
             // Title cell
             const titleCell = newRow.insertCell(0);
             titleCell.textContent = title;
 
             // Actions cell
             const actionsCell = newRow.insertCell(1);
-            const viewButton = document.createElement("button");
-            viewButton.textContent = "View";
-            viewButton.classList.add("view-btn");
-            const editButton = document.createElement("button");
-            editButton.textContent = "Edit";
-            editButton.classList.add("edit-btn");
-            const deleteButton = document.createElement("button");
-            deleteButton.textContent = "Delete";
-            deleteButton.classList.add("delete-btn");
-
-            // Add event listener for view button
-            viewButton.addEventListener("click", function() {
+            
+            // Create view icon
+            const viewIcon = document.createElement("img");
+            viewIcon.src = "pics/view.png"; // Path to view.png in the "pics" folder
+            viewIcon.alt = "View";
+            viewIcon.classList.add("summaryIcon");
+            viewIcon.addEventListener("click", function() {
                 handleViewButtonClick(index);
             });
 
-            // Add event listener for edit button
-            editButton.addEventListener("click", function() {
+            // Create edit icon
+            const editIcon = document.createElement("img");
+            editIcon.src = "pics/edit.png"; // Path to edit.png in the "pics" folder
+            editIcon.alt = "Edit";
+            editIcon.classList.add("summaryIcon");
+            editIcon.addEventListener("click", function() {
                 handleEditButtonClick(index);
             });
 
-            // Add event listener for delete button
-            deleteButton.addEventListener("click", function() {
+            // Create delete icon
+            const deleteIcon = document.createElement("img");
+            deleteIcon.src = "pics/delete.png"; // Path to delete.png in the "pics" folder
+            deleteIcon.alt = "Delete";
+            deleteIcon.classList.add("summaryIcon");
+            deleteIcon.addEventListener("click", function() {
                 const confirmDelete = confirm("Are you sure you want to delete this entry?");
                 if (confirmDelete) {
                     deleteRowAndObject(index);
                 }
             });
 
-            actionsCell.appendChild(viewButton);
-            actionsCell.appendChild(editButton);
-            actionsCell.appendChild(deleteButton);
+            actionsCell.appendChild(viewIcon);
+            actionsCell.appendChild(editIcon);
+            actionsCell.appendChild(deleteIcon);
         }
+
     }
 });

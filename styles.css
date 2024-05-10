@@ -13,6 +13,7 @@ nav{
 }
 .icons{
     max-width: 35px;
+    cursor: pointer;
 }
 table {
     width: 100%;
@@ -44,3 +45,36 @@ form input {
 form button:hover {
     background-color: #45a049;
 }
+
+.summaryIcon{
+    max-width: 20px;
+    padding-right: 5px;
+    padding-left: 5px;
+    cursor: pointer;
+}
+
+#summary-table th:first-child {
+    width: 70%;
+}
+
+.editAddRow{
+    text-align: center;
+}
+.hide-element {
+    display: none;
+    color: blue;
+}
+
+footer{
+    color:grey;
+    margin-top: 25px;
+    text-align: right;
+}
+
+@media screen and (max-width: 950px) {
+    body {
+        width:85%;
+      margin-left: 55px;
+      margin-right: 35px;
+    }
+  }

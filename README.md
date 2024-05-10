@@ -13,3 +13,5 @@
 
 ## Stretch
   Change buttons to icons
+
+  Edit/Editold have single edit button for maintable

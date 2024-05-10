@@ -9,6 +9,10 @@ document.addEventListener("DOMContentLoaded", function() {
     let currentSheetForEdit = localStorage.getItem("currentSheetForEdit");
     if (currentSheetForEdit) {
         let sheetData = JSON.parse(currentSheetForEdit);
+        // Set the title of the current sheet dynamically
+        const currentSheetTitle = document.getElementById("current-sheet-title");
+        currentSheetTitle.textContent = sheetData.title || "Title Here";
+        
         console.log(sheetData);
         
         // Populate the main table with the data of the selected object
@@ -21,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
             createAdditionalTableRow(rowData);
         });
     }
-
+    
     // Function to calculate the sum of all deltas
     function calculateSumOfDeltas() {
         const allRows = mainTableBody.querySelectorAll("tr");
